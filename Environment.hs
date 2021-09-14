@@ -18,7 +18,7 @@ data HList :: [(Nat , SType)] -> * where
     HCons :: (SNat n , SeType s) -> HList xs -> HList ('(n , s) ': xs)  
 
 -- Γ : avg-attack.hs
-envAvgAttack = HCons (zero,L) (HCons (one, H) (HCons (two, H) (HCons (three, H) (HCons (four, H) HNil))))
+avgAttack = HCons (zero,L) (HCons (one, H) (HCons (two, H) (HCons (three, H) (HCons (four, H) HNil))))
 -- Γ : correct-flow.hs
 correctFlow = HCons (zero,H) (HCons (one, L) (HCons (two, L) HNil))
 -- Γ : wallet.hs

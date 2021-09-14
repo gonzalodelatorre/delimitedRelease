@@ -49,10 +49,10 @@ h3 3 -> High
 -- Probamos con otro ambiente.
 initEnvironment = M.insert 0 2 (M.insert 1 8 (M.insert 2 22 (M.insert 3 5 initEnv)))
 
-avg =  var envAvgAttack zero
-h1 =  var envAvgAttack one  
-h2 =  var envAvgAttack two 
-h3 =  var envAvgAttack three 
+avg =  var avgAttack zero
+h1 =  var avgAttack one  
+h2 =  var avgAttack two 
+h3 =  var avgAttack three 
 
 
 -- (h1+h2+h3)/n
