@@ -13,29 +13,11 @@ import DR
 -- sus elementos pueden ser distintos tipos, sí tienen el mismo kind (Nat,SType) 
 --
 -- Necesitamos poder definir una lista a nivel de valores que tenga como tipo una lista heterogénea de tipos 
+infixr 5 :-:
+
 data HList :: [(Nat , SType)] -> * where
-    HNil :: HList '[] 
-    HCons :: (SNat n , SeType s) -> HList xs -> HList ('(n , s) ': xs)  
-
--- Γ : avg-attack.hs
-avgAttack = HCons (zero,L) (HCons (one, H) (HCons (two, H) (HCons (three, H) (HCons (four, H) HNil))))
--- Γ : correct-flow.hs
-correctFlow = HCons (zero,H) (HCons (one, L) (HCons (two, L) HNil))
--- Γ : wallet.hs
-wallet = HCons (zero,H) (HCons (one, L) (HCons (two, L) HNil))
--- Γ : implicit-flow.hs
-implicitFlow = HCons (zero,H) (HCons (one, L) HNil)
--- Γ : incorrect-assigment.hs
-incorrectAssigment = HCons (zero,L) (HCons (one, H) HNil)
--- Γ : parity-safe.hs
-paritySafe = HCons (zero,H) (HCons (one, L) HNil)
--- Γ : safe-update.hs
-safeUpdate = HCons (zero,L) (HCons (one, H) (HCons (two, H) HNil))
--- Γ : safe-while.hs
-safeWhile = HCons (zero, H) (HCons (one, L) (HCons (two, L) (HCons (three, L) (HCons (four, L) HNil))))
--- Γ : wallet-attack.hs
-walletAttack = HCons (zero, H) (HCons (one, L) (HCons (two, L) (HCons (three, L) (HCons (four, L) HNil))))
-
+    Nil :: HList '[] 
+    (:-:) :: (SNat n , SeType s) -> HList xs -> HList ('(n , s) ': xs) 
 
 -- Tipos de las variables
 

@@ -11,38 +11,42 @@ module Constructors where
 import DR
 import Environment
 
-
+-- Variables
 var :: HList env -> SNat (n :: Nat) -> Exp env (Lookup env n) '[] (n ': '[])
 var en n = Var n
 
-
+-- Integer literals
 int :: Int -> Exp env 'Low '[] '[]
 int = IntLit
 
+-- Boolean literals
 bool :: Bool -> Exp env 'Low '[] '[]
 bool = BoolLit
 
-plus = Ope Plus
-minus = Ope Minus
-mult = Ope Mult
-gt   = Ope Gt 
-gte   = Ope GtE 
-lt   = Ope Lt 
-lte   = Ope LtE 
-eq = Ope Eq
-neq = Ope NotEq
-expo = Ope Exp -- TODO CAMBIAR NOMBRE
-(//) = Ope Div 
-(%.) = Ope Mod
-(&.) = Ope And 
-(|.) = Ope Or 
+-- Operators
+x +. y = Ope Plus x y
+x -. y = Ope Minus x y
+x *. y = Ope Mult x y
+x >. y = Ope Gt x y
+x >=. y = Ope GtE x y
+x <. y = Ope Lt x y
+x <=. y = Ope LtE x y
+x =. y = Ope Eq x y
+x \=. y = Ope NotEq  x y
+x ^. y = Ope Exp x y
+x // y = Ope Div x y
+x %. y = Ope Mod x y 
+x &&. y = Ope And x y 
+x ||. y = Ope Or x y  
 
+-- Assigment
 (=:) n exp = Ass n exp
 
+-- Declassify
 declassify :: Exp env l' d vars -> SeType l -> Exp env l vars vars
 declassify e l = Declassify e l 
 
-
+-- Sequence
 (\.)
   :: (Intersection u1 d2 ~ '[]) =>
      Stm env pc u1 d1
@@ -58,5 +62,4 @@ iff c e1 e2 = If c e1 e2
 
 -- While
 while c e1 = While c e1
-
 

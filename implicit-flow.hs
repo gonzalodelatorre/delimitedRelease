@@ -6,10 +6,10 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeOperators #-}  
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} -- Para que las clases puedan tener más de un parámetro
-{-# LANGUAGE FlexibleInstances #-} -- Para usar variables en las instancias de clases
-{-# LANGUAGE FlexibleContexts #-} -- Lo Agregué
-{-# LANGUAGE UndecidableInstances #-} -- Lo Agregué
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
@@ -36,12 +36,13 @@ No acepta porque si yl es 1, se que xH es true.
 -}
 
 
-type Env = '[ '( 'Zero, 'High),'( One, 'Low) ]
+-- entorno de variables con tipos de seguridad
+env = (zero, H) :-: (one, L) :-: Nil
 
 
-xH = var implicitFlow zero
+xH = var env zero
 
-yL = var implicitFlow one
+yL = var env one
 
 -- yL := 1
 yLEquals1 =  one =: (int 1)

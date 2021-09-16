@@ -32,10 +32,12 @@ vh 1 -> High
 
 -}
 
+-- entorno de variables con tipos de seguridad
+env = (zero, L) :-: (one, H) :-: Nil
 
 
-vl = var incorrectAssigment zero
-vh = var incorrectAssigment one
+vl = var env zero
+vh = var env one
 
 
 -- vl := vh 

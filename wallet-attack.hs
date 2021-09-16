@@ -6,10 +6,10 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeOperators #-}  
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} -- Para que las clases puedan tener más de un parámetro
-{-# LANGUAGE FlexibleInstances #-} -- Para usar variables en las instancias de clases
-{-# LANGUAGE FlexibleContexts #-} -- Lo Agregué
-{-# LANGUAGE UndecidableInstances #-} -- Lo Agregué
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
@@ -53,15 +53,19 @@ n := n − 1
 
 -- if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 
-h = var walletAttack zero
-l = var walletAttack one
-k = var walletAttack two
-n = var walletAttack three
+-- entorno de variables con tipos de seguridad
+env = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: (four, L)  :-: Nil
+
+
+h = var env zero
+l = var env one
+k = var env two
+n = var env three
 
 
 lEquals0 = one =: (int 0)
 -- k := (2 exp n) − 1;
-expOp = minus ( expo (int 2) n) (int 1)
+expOp = ((int 2) ^. n) -. (int 1)
 
 
 kEqualsExpOp = two =: expOp
@@ -69,10 +73,10 @@ kEqualsExpOp = two =: expOp
 
 --  n >= 0  
 
-nGT0 = gt n (int 0)
+nGT0 =  n >. (int 0)
 
 -- n := n − 1
-nMinus1 =  minus n (int 1)
+nMinus1 =  n -. (int 1)
 
 
 
@@ -80,14 +84,14 @@ nEqualsnMinus1 = three =: nMinus1
 
 
 -- h := h - k
-hMinusk = minus h k
+hMinusk = h -. k
 
 
 hEqualshMinusk = zero =: hMinusk
 
 
 -- l := l + k
-lPlusk = plus l k
+lPlusk = l +. k
 
 lqualslPlusk = one =: lPlusk
 
@@ -97,7 +101,7 @@ seqAssigments = hEqualshMinusk \. lqualslPlusk
 
 --  h >= k  
 
-hGtEk = gt h k
+hGtEk = h >=. k
 
 
 dec_ = declassify hGtEk L
@@ -124,9 +128,9 @@ seq2 = ifStm \. seq1
 
 
 -- Se rompe:
-code = lEquals0 \. (while nGT0  (kEqualsExpOp \. seq2))
+-- code = lEquals0 \. (while nGT0  (kEqualsExpOp \. seq2))
 
 -- Andan ok. BORAR.
 pr1 = skip \. skip
-pr2 = iff (gt h k) skip skip
-pr3 = while (gt h k) skip 
+pr2 = iff (h >. k) skip skip
+pr3 = while (h >. k) skip 

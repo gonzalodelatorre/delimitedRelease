@@ -6,10 +6,10 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeOperators #-}  
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} -- Para que las clases puedan tener más de un parámetro
-{-# LANGUAGE FlexibleInstances #-} -- Para usar variables en las instancias de clases
-{-# LANGUAGE FlexibleContexts #-} -- Lo Agregué
-{-# LANGUAGE UndecidableInstances #-} -- Lo Agregué
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
@@ -42,18 +42,19 @@ h 0 -> High
 l 1 -> Low
 
 
-
-
 -}
 
 
-h = var paritySafe zero
+-- entorno de variables con tipos de seguridad
+env = (zero, H) :-: (one,L) :-: Nil
 
-l = var paritySafe one
+h = var env zero
+
+l = var env one
 
 
 -- if declassify(h = 1, low) then (l := 1; h := 1) else (l := 0; h := 0)
-ifStm = iff (declassify (eq h (int 0)) L) ((one  =: (int 1))  \. (zero  =: (int 1))) ((one  =: (int 0))  \. (zero  =: (int 0)))
+ifStm = iff (declassify (h =. (int 0)) L) ((one  =: (int 1))  \. (zero  =: (int 1))) ((one  =: (int 0))  \. (zero  =: (int 0)))
 
 -- Programa no seguro
 -- unsafe =  (zero  =: (int 0)) \. ifStm

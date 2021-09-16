@@ -6,10 +6,10 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeOperators #-}  
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} -- Para que las clases puedan tener más de un parámetro
-{-# LANGUAGE FlexibleInstances #-} -- Para usar variables en las instancias de clases
-{-# LANGUAGE FlexibleContexts #-} -- Lo Agregué
-{-# LANGUAGE UndecidableInstances #-} -- Lo Agregué
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
@@ -39,14 +39,18 @@ zL 2 -> Low
 -}
 
 
-xH = var correctFlow zero  
-yL = var correctFlow one 
-zL = var correctFlow two 
+-- entorno de variables con tipos de seguridad
+env = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
+
+
+xH = var env zero  
+yL = var env one 
+zL = var env two 
 
 -- xH :=  xH - 1
-xHMinusOne =  zero  =: (minus xH (int 1)) 
+xHMinusOne =  zero  =: (xH -. (int 1)) 
 -- zL :=  zL - 1
-zLPlusOne = two  =: (plus zL (int 1))
+zLPlusOne = two  =: (zL  +. (int 1))
 
 
 
@@ -57,9 +61,9 @@ zLPlusOne = two  =: (plus zL (int 1))
 
 
 
-ifStm2  =  ( zero =: (int 10)  \. ((one =: (bool True)) \. (two =: (int 1))) ) \. (iff (plus yL (int 2)) zLPlusOne xHMinusOne)
+ifStm2  =  ( zero =: (int 10)  \. ((one =: (bool True)) \. (two =: (int 1))) ) \. (iff (yL +. (int 2)) zLPlusOne xHMinusOne)
 
--- program  =   (zero =: (int 0))  \.  (while (lt xH (int 10)) (zero =: (plus xH (int 1))))
+-- program  =   (zero =: (int 0))  \.  (while (xH <. (int 10)) (zero =: (xH +. (int 1))))
 
 
 

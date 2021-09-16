@@ -6,10 +6,10 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeOperators #-}  
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} -- Para que las clases puedan tener más de un parámetro
-{-# LANGUAGE FlexibleInstances #-} -- Para usar variables en las instancias de clases
-{-# LANGUAGE FlexibleContexts #-} -- Lo Agregué
-{-# LANGUAGE UndecidableInstances #-} -- Lo Agregué
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
@@ -37,14 +37,16 @@ h2 2 -> High
 
 -}
 
+-- entorno de variables con tipos de seguridad
+env = (zero, L) :-: (one, H) :-: (two, H) :-: Nil
 
 envSafeUpdate =  M.insert 0 2 (M.insert 1 2 (M.insert 2 3 initEnv))
 
-l = var safeUpdate zero
+l = var env zero
 
-h1 = var safeUpdate one
+h1 = var env one
 
-h2 = var safeUpdate two
+h2 = var env two
 
 code = (one =: (int 1)) \.
        (zero =:  declassify h2 L)

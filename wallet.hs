@@ -6,10 +6,10 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeOperators #-}  
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} -- Para que las clases puedan tener más de un parámetro
-{-# LANGUAGE FlexibleInstances #-} -- Para usar variables en las instancias de clases
-{-# LANGUAGE FlexibleContexts #-} -- Lo Agregué
-{-# LANGUAGE UndecidableInstances #-} -- Lo Agregué
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
@@ -43,22 +43,26 @@ if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 -}
 
 
+-- entorno de variables con tipos de seguridad
+env = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
+
+
 -- if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 
-h = var wallet zero
+h = var env zero
 
-l = var wallet one
+l = var env one
 
-k = var wallet two
+k = var env two
 
 -- Probamos con otro ambiente.
 initEnv2 =  M.insert 0 2 (M.insert 1 2 (M.insert 2 2 initEnv))
 
-ifStm = iff (declassify (gt h k) L) ( (zero =: (minus h k))  \. (one =: (plus l k))) skip
+ifStm = iff (declassify (h  >. k) L) ( (zero =: (h -. k))  \. (one =: (l +. k))) skip
 
 -- evalStmWithEnviroment ifStm initEnv2
 -- fromList [(0,2),(1,2),(2,2)]
 
 
 -- 
--- ifStm2 = ifthenelse (declassify (gt h k) L) skip skip
+ifStm2 = iff (declassify (h >. k) L) skip skip
