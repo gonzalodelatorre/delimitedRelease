@@ -45,7 +45,7 @@ xH = var env zero
 yL = var env one
 
 -- yL := 1
-yLEquals1 =  one =: (int 1)
+yLEquals1 =  one =: int 1
 
 -- No anda, mismo error.
-code  =  (iff xH yLEquals1 skip) 
+code  =  iff xH yLEquals1 skip

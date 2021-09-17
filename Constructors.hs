@@ -16,6 +16,8 @@ var :: HList env -> SNat (n :: Nat) -> Exp env (Lookup env n) '[] (n ': '[])
 var en n = Var n
 
 -- Integer literals
+-- infixr 6 (int), bool
+infixr 6 `int`, `bool`
 int :: Int -> Exp env 'Low '[] '[]
 int = IntLit
 
@@ -24,6 +26,15 @@ bool :: Bool -> Exp env 'Low '[] '[]
 bool = BoolLit
 
 -- Operators
+infixr 6 +., -.
+infixr 7 *., //, %.
+
+infixr 5 >., >=., <., <=.
+infixr 4 =., \=.
+infixr 3 &&.
+infixr 2 ||.
+
+
 x +. y = Ope Plus x y
 x -. y = Ope Minus x y
 x *. y = Ope Mult x y
@@ -39,14 +50,26 @@ x %. y = Ope Mod x y
 x &&. y = Ope And x y 
 x ||. y = Ope Or x y  
 
+
+
 -- Assigment
+infixr 2 =:
 (=:) n exp = Ass n exp
+
+-- Assigment2
+--(=::) var exp = Ass (funcion var) exp
+
+--funcion ::  Exp env (Lookup env n) '[] '[n] -> SNat (n :: Nat) 
+--funcion e = SZero
+
 
 -- Declassify
 declassify :: Exp env l' d vars -> SeType l -> Exp env l vars vars
 declassify e l = Declassify e l 
 
 -- Sequence
+
+infixr 1 \.
 (\.)
   :: (Intersection u1 d2 ~ '[]) =>
      Stm env pc u1 d1
@@ -58,8 +81,10 @@ declassify e l = Declassify e l
 skip = Skip
 
 -- If
+infixr 6 `iff`
 iff c e1 e2 = If c e1 e2
 
 -- While
+infixr 6 `while`
 while c e1 = While c e1
 

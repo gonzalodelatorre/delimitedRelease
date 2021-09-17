@@ -48,9 +48,9 @@ yL = var env one
 zL = var env two 
 
 -- xH :=  xH - 1
-xHMinusOne =  zero  =: (xH -. (int 1)) 
+xHMinusOne =  zero  =: xH -. int 1
 -- zL :=  zL - 1
-zLPlusOne = two  =: (zL  +. (int 1))
+zLPlusOne = two  =: zL  +. int 1
 
 
 
@@ -61,9 +61,13 @@ zLPlusOne = two  =: (zL  +. (int 1))
 
 
 
-ifStm2  =  ( zero =: (int 10)  \. ((one =: (bool True)) \. (two =: (int 1))) ) \. (iff (yL +. (int 2)) zLPlusOne xHMinusOne)
+ifStm2  =   zero =: int 10  \. 
+            one =: bool True \.
+            two =: int 1 \. 
+            iff (yL +. int 2) zLPlusOne xHMinusOne
 
--- program  =   (zero =: (int 0))  \.  (while (xH <. (int 10)) (zero =: (xH +. (int 1))))
+program  =   zero =: int 0  \.  
+             while (xH <. int 10) (zero =: xH +. int 1)
 
 
 

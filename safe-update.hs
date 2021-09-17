@@ -48,8 +48,8 @@ h1 = var env one
 
 h2 = var env two
 
-code = (one =: (int 1)) \.
-       (zero =:  declassify h2 L)
+code = one =: int 1 \.
+       zero =:  declassify h2 L
 	   
 -- evalStmWithEnviroment code envSafeUpdate
 -- fromList [(0,3),(1,1),(2,3)]

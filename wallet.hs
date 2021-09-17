@@ -58,7 +58,11 @@ k = var env two
 -- Probamos con otro ambiente.
 initEnv2 =  M.insert 0 2 (M.insert 1 2 (M.insert 2 2 initEnv))
 
-ifStm = iff (declassify (h  >. k) L) ( (zero =: (h -. k))  \. (one =: (l +. k))) skip
+ifStm = iff (declassify (h  >. k) L)
+              
+			  (zero =: h -. k  \. one =: l +. k)
+		 
+		      skip
 
 -- evalStmWithEnviroment ifStm initEnv2
 -- fromList [(0,2),(1,2),(2,2)]
