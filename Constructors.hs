@@ -45,7 +45,7 @@ x <=. y = Ope LtE x y
 x =. y = Ope Eq x y
 x \=. y = Ope NotEq  x y
 x ^. y = Ope Exp x y
-x // y = Ope Div x y
+x // y = Ope Div x y -- TODO Maybe we can rename this operator to follow the dot pattern
 x %. y = Ope Mod x y 
 x &&. y = Ope And x y 
 x ||. y = Ope Or x y  

@@ -27,6 +27,11 @@ type One = 'Succ 'Zero
 type Two = 'Succ One
 type Three = 'Succ Two
 type Four = 'Succ Three
+type Five = 'Succ Four
+type Six = 'Succ Five
+type Seven = 'Succ Six
+type Eight = 'Succ Seven
+type Nine = 'Succ Eight
 
 -- Variables
 
@@ -44,4 +49,19 @@ three = SSucc two
 
 four :: SNat Four
 four = SSucc three
+
+five :: SNat Five
+five = SSucc four
+
+six :: SNat Six
+six = SSucc five
+
+seven :: SNat Seven
+seven = SSucc six
+
+eight :: SNat Eight
+eight = SSucc seven
+
+nine :: SNat Nine
+nine = SSucc eight
 
