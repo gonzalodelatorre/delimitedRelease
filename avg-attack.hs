@@ -91,7 +91,7 @@ precedence = four =: (h1 +. h2 +. h3) // int 3
 
 -- Rompe
 -- No tipa, este es el ejemplo que pongo en la tesis.
---code2 =   (one =: (int 10)) \.   -- -- Swapping the values h1, h2.
+--unsecure =   (one =: (int 10)) \.   -- -- Swapping the values h1, h2.
 --         (two =: h1) \.
 --        (three =: (int 0)) \.
 --         averageSalaries 
