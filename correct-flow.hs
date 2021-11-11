@@ -40,12 +40,12 @@ zL 2 -> Low
 
 
 -- entorno de variables con tipos de seguridad
-env = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
+securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
 
 
-xH = var env zero  
-yL = var env one 
-zL = var env two 
+xH = var securityEnvironment zero  
+yL = var securityEnvironment one 
+zL = var securityEnvironment two 
 
 -- xH :=  xH - 1
 xHMinusOne =  zero  =: xH -. int 1

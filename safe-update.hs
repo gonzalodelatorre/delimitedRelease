@@ -38,20 +38,20 @@ h2 2 -> High
 -}
 
 -- entorno de variables con tipos de seguridad
-env = (zero, L) :-: (one, H) :-: (two, H) :-: Nil
+securityEnvironment = (zero, L) :-: (one, H) :-: (two, H) :-: Nil
 
-envSafeUpdate =  M.insert 0 2 (M.insert 1 2 (M.insert 2 3 initEnv))
+memory = M.insert 0 2 (M.insert 1 2 (M.insert 2 3 initMemory))
 
-l = var env zero
+l = var securityEnvironment zero
 
-h1 = var env one
+h1 = var securityEnvironment one
 
-h2 = var env two
+h2 = var securityEnvironment two
 
 code = one =: int 1 \.
        zero =:  declassify h2 L
 	   
--- evalStmWithEnviroment code envSafeUpdate
+-- evalStmWithEnviroment code memory
 -- fromList [(0,3),(1,1),(2,3)]
 
 	

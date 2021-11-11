@@ -45,14 +45,14 @@ l 1 -> Low
 -}
 
 -- Probamos con otro ambiente.
-initEnvironment = M.insert 0 2 (M.insert 1 8 (M.insert 2 22 (M.insert 3 5 initEnv)))
+memory = M.insert 0 2 (M.insert 1 8 (M.insert 2 22 (M.insert 3 5 initMemory)))
 
 -- entorno de variables con tipos de seguridad
-env = (zero, H) :-: (one,L) :-: Nil
+securityEnvironment = (zero, H) :-: (one,L) :-: Nil
 
-h = var env zero
+h = var securityEnvironment zero
 
-l = var env one
+l = var securityEnvironment one
 
 
 -- if declassify(h = 1, low) then (l := 1; h := 1) else (l := 0; h := 0)
@@ -60,7 +60,7 @@ ifStm =   iff (declassify (h =. int 0) L)
                   (one  =: int 1  \. zero  =: int 33) 
 			      (one  =: int 88  \. zero  =: int 89)
 				  
--- evalStmWithEnviroment ifStm initEnvironment
+-- evalStmWithEnviroment ifStm memory
 -- El resultado depende de la variable 0 que sereo en init enviroment 
 
 -- Programa no seguro

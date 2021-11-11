@@ -37,12 +37,12 @@ No acepta porque si yl es 1, se que xH es true.
 
 
 -- entorno de variables con tipos de seguridad
-env = (zero, H) :-: (one, L) :-: Nil
+securityEnvironment = (zero, H) :-: (one, L) :-: Nil
 
 
-xH = var env zero
+xH = var securityEnvironment zero
 
-yL = var env one
+yL = var securityEnvironment one
 
 -- yL := 1
 yLEquals1 =  one =: int 1
