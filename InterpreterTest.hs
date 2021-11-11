@@ -37,8 +37,8 @@ type Enviroment = M.Map Int Int
 
 
 -- Entorno nulo
-initEnv :: Enviroment
-initEnv = M.empty
+initMemory :: Enviroment
+initMemory = M.empty
 
 
 -- Mónada estado
@@ -128,7 +128,7 @@ orOp x y = 1
 ---------------------------------------
 -- Evalua un programa en el estado nulo
 evalStm :: Stm a b c d -> Enviroment
-evalStm p = snd (runState (eval p) initEnv)
+evalStm p = snd (runState (eval p) initMemory)
 
 
 -- Evalua un programa en un estado dado.

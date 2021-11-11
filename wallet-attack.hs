@@ -1,4 +1,3 @@
-{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DataKinds #-} 
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE GADTs #-}
@@ -54,13 +53,13 @@ n := n − 1
 -- if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 
 -- entorno de variables con tipos de seguridad
-env = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: (four, L)  :-: Nil
+securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: (four, L)  :-: Nil
 
 
-h = var env zero
-l = var env one
-k = var env two
-n = var env three
+h = var securityEnvironment  zero
+l = var securityEnvironment  one
+k = var securityEnvironment  two
+n = var securityEnvironment  three
 
 
 lEquals0 = one =: (int 0)
@@ -128,7 +127,16 @@ seq2 = ifStm \. seq1
 
 
 -- Se rompe:
--- code = lEquals0 \. (while nGT0  (kEqualsExpOp \. seq2))
+-- unsecureElectronicWallet  = lEquals0 \. (while nGT0  (kEqualsExpOp \. seq2))
+
+
+unsecureElectronicWallet  = one =: int 0 \. 
+                            (while (n >. int 0)  
+							        (two =:  int 2 ^. n -. int 1 \. 
+									 iff (declassify (h >=. k) L) 
+										    (zero =:  h -. k \. one =:  l +. k)						--seqAssigments 
+										    skip \. 
+									 three =:  n -. int 1 \. skip))
 
 -- Andan ok. BORAR.
 pr1 = skip \. skip

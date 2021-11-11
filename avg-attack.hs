@@ -50,7 +50,7 @@ securityEnvironment = (zero, L) :-: (one, H) :-: (two, H) :-: (three, H) :-: (fo
 
 
 -- Memoria incial.
-initMemory = M.insert 0 2 (M.insert 1 3000 (M.insert 2 6000 (M.insert 3 3000 initEnv)))
+memory = M.insert 0 2 (M.insert 1 3000 (M.insert 2 6000 (M.insert 3 3000 initMemory)))
 
 avg =  var securityEnvironment zero
 h1 =  var securityEnvironment one  
@@ -66,14 +66,14 @@ h3 =  var securityEnvironment three
 -- Este programa es correcto.
 -- La evaluacion es correcta.
 averageSalaries = zero =: declassify ((h1 +. h2 +. h3) // int 3) L
--- evalStmWithEnviroment averageSalaries initMemory
+-- evalStmWithEnviroment averageSalaries memory
 -- fromList [(0,11),(1,8),(2,22),(3,5)]
 -- La variable 0 va cambiando, si cambio los valores del ambiente
 
 
 -- Works
 precedence = four =: (h1 +. h2 +. h3) // int 3 
--- evalStmWithEnviroment precedence initMemory
+-- evalStmWithEnviroment precedence memory
 -- fromList [(0,2),(1,8),(2,22),(3,5),(4,11)]
 
 
@@ -89,12 +89,12 @@ precedence = four =: (h1 +. h2 +. h3) // int 3
 
 
 -- No tipa, este es el ejemplo que pongo en la tesis.
-
-unsecureProgram = one =: int 10 \.   -- Swapping the values h1, h2.
+{-
+unsecureProgram = one =: int 100 \.   -- Swapping the values h1, h2.
                   two =: h1 \.
                   three =: h1 \.
                   averageSalaries 
-
+-}
 
 -- Ejemplo de asignación.
 assigmentExample = one =: int 100

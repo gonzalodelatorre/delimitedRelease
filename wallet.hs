@@ -1,4 +1,3 @@
-{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DataKinds #-} 
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE GADTs #-}
@@ -43,30 +42,30 @@ if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 -}
 
 
--- entorno de variables con tipos de seguridad
-env = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
+-- Entorno de seguridad.
+securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
 
 
 -- if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 
-h = var env zero
+h = var securityEnvironment zero
 
-l = var env one
+l = var securityEnvironment one
 
-k = var env two
+k = var securityEnvironment two
 
 -- Probamos con otro ambiente.
-initEnv2 =  M.insert 0 2 (M.insert 1 2 (M.insert 2 2 initEnv))
+memory =  M.insert 0 500 (M.insert 1 0 (M.insert 2 45 initMemory))
 
-ifStm = iff (declassify (h  >. k) L)
+secureElectronicWallet = iff (declassify (h  >. k) L)
               
 			  (zero =: h -. k  \. one =: l +. k)
 		 
 		      skip
 
--- evalStmWithEnviroment ifStm initEnv2
--- fromList [(0,2),(1,2),(2,2)]
+-- evalStmWithEnviroment secureElectronicWallet memory
+-- fromList [(0,455),(1,45),(2,45)]
 
 
--- 
+-- Another example. 
 ifStm2 = iff (declassify (h >. k) L) skip skip
