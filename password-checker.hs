@@ -1,4 +1,3 @@
-{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DataKinds #-} 
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE GADTs #-}
@@ -22,28 +21,26 @@ import qualified Data.Map.Strict               as M
 
 {-
 
-Password checking
+Password checker
 
 -}
 
 
--- entorno de variables con tipos de seguridad
-env = (zero, H) :-: (one, L) :-: (two, L) :-: (three, H) :-: (four, H)  :-: Nil
+-- Security environment.
+securityEnvironment = (zero, H) :-: (one, L) :-: (two, H) :-: (three, H) :-: (four, H) :-: Nil -- TODO CAMBIE DOS A HIGH
 
-
-
--- Probamos con otro ambiente.
-database =  M.insert 0 23 (M.insert 1 45 (M.insert 2 2391 (M.insert 3 0 (M.insert 4 67 initEnv))))
+-- Database 
+database = M.insert 0 23 (M.insert 1 45 (M.insert 2 2391 (M.insert 3 0 (M.insert 4 67 initMemory))))
 
 -- password y userId lo que ingresa el usuario.
-password = var env zero
-userId = var env one
-passwordUserIdHash = var env two
-tmp = var env three
-newPassword = var env four
+password = var securityEnvironment zero
+userId = var securityEnvironment one
+passwordUserIdHash = var securityEnvironment two
+tmp = var securityEnvironment three
+newPassword = var securityEnvironment four
 
 
--- isMatch = var env three
+-- isMatch = var securityEnvironment three
 
 
 {-
@@ -63,7 +60,7 @@ userId 45
 buildHash 2391
           
 -}
-buildHash =   ((password +. userId)  *. (password +. userId +. int 1)) // int 2  +. userId
+buildHash = ((password +. userId)  *. (password +. userId +. int 1)) // int 2  +. userId
 
 {-
 
@@ -128,14 +125,14 @@ Eventualmente voy a descasificar h, y la voy a asignar a una variable low.
 -}
 
 -- Probamos con otro ambiente.
-databaseLaundering =  M.insert 5 23 (M.insert 6 45 (M.insert 7 23391  (M.insert 8 500  (M.insert 9 0  initEnv))))
-envFail = (five, L) :-: (six, H) :-: (seven, L) :-: (eight, L) :-: (nine, L) :-: Nil
+databaseLaundering =  M.insert 5 23 (M.insert 6 45 (M.insert 7 23391 (M.insert 8 500 (M.insert 9 0 initMemory))))
+failedSecurityEnvironment = (five, L) :-: (six, H) :-: (seven, L) :-: (eight, L) :-: (nine, L) :-: Nil
 
-l = var envFail five
-h = var envFail six
-k = var envFail seven
-n = var envFail eight
-temporalSignal = var envFail nine
+l = var failedSecurityEnvironment five
+h = var failedSecurityEnvironment six
+k = var failedSecurityEnvironment seven
+n = var failedSecurityEnvironment eight
+temporalSignal = var failedSecurityEnvironment nine
 
 
 {-
