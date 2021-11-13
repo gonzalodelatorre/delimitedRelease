@@ -61,7 +61,7 @@ zLPlusOne = two  =: zL  +. int 1
 
 
 
-ifStm2  =   zero =: int 10  \. 
+ifStm  =   zero =: int 10  \. 
             one =: bool True \.
             two =: int 1 \. 
             iff (yL +. int 2) zLPlusOne xHMinusOne
@@ -71,8 +71,8 @@ program  =   zero =: int 0  \.
 
 
 
--- evalStm ifStm2
--- evalStm ifStm2 : fromList [(0,9),(1,1),(2,1)]
+-- evalStm ifStm
+-- evalStm ifStm : fromList [(0,9),(1,1),(2,1)]
 -- Las variables se actualizan
 
  

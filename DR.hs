@@ -75,14 +75,14 @@ data Op = Plus | Minus| Mult | Div | Exp | Mod
 -- por ej. SSucc SZero :: SNat (Succ Zero)
 -}
 data SNat (n :: Nat) where
-  SZero :: SNat Zero
-  SSucc :: SNat n -> SNat (Succ n)
+  SZero :: SNat 'Zero
+  SSucc :: SNat n -> SNat ('Succ n)
 
 
 -- por cada natural en el type-level hay una copia en el value-level 
 -- por ej. SSucc SZero :: SNat (Succ Zero)
 
-data SeType (s :: SType ) where
+data SeType (s :: SType) where
   L :: SeType 'Low
   H :: SeType 'High
 

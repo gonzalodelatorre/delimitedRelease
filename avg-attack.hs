@@ -98,5 +98,5 @@ unsecureProgram = one =: int 100 \.   -- Swapping the values h1, h2.
 
 -- Ejemplo de asignación.
 assigmentExample = one =: int 100
--- *Main> evalStmWithEnviroment assigmentExample initMemory
+-- *Main> evalStmWithEnviroment assigmentExample memory
 -- fromList [(0,2),(1,100),(2,22),(3,5)]
