@@ -13,11 +13,11 @@
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
 
-module Interpreter where
+module Source.Interpreter where
 
 
-import           DelimitedRelease
-import           Monads
+import           Source.DelimitedRelease
+import           Source.Monads
 import qualified Data.Map.Strict               as M
 import           Data.Maybe
 import           Prelude                 hiding ( fst

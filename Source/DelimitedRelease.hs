@@ -13,7 +13,7 @@
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
 
-module DelimitedRelease where
+module Source.DelimitedRelease where
 
 import Control.Monad.Reader
 

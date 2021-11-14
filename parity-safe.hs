@@ -13,10 +13,10 @@
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
-import DelimitedRelease
-import Constructors
-import Environment
-import Interpreter
+import Source.DelimitedRelease
+import Source.Constructors
+import Source.Environment
+import Source.Interpreter
 
 import qualified Data.Map.Strict               as M
 
@@ -44,7 +44,7 @@ l 1 -> Low
 -}
 
 -- Probamos con otro ambiente.
-memory = M.insert 0 2 (M.insert 1 8 (M.insert 2 22 (M.insert 3 5 initMemory)))
+memory = M.insert 0 0 (M.insert 1 32 (M.insert 2 222 (M.insert 3 53 initMemory)))
 
 -- entorno de variables con tipos de seguridad
 securityEnvironment = (zero, H) :-: (one,L) :-: Nil

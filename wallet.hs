@@ -12,10 +12,10 @@
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
-import DelimitedRelease
-import Constructors
-import Environment
-import Interpreter
+import Source.DelimitedRelease
+import Source.Constructors
+import Source.Environment
+import Source.Interpreter
 
 import qualified Data.Map.Strict               as M
 

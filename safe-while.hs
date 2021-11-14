@@ -15,14 +15,10 @@
 
 
 
--- TODO TERMINAR
--- Γ : safe-while.hs
---safeWhile = HCons (zero, H) (HCons (one, L) (HCons (two, L) (HCons (three, L) (HCons (four, L) HNil))))
-
-import DelimitedRelease
-import Constructors
-import Environment
-import Interpreter
+import Source.DelimitedRelease
+import Source.Constructors
+import Source.Environment
+import Source.Interpreter
 
 import qualified Data.Map.Strict               as M
 

@@ -6,10 +6,10 @@
 {-# LANGUAGE FlexibleContexts #-} 
 {-# LANGUAGE UndecidableInstances #-} 
 
-module Constructors where
+module Source.Constructors where
 
-import DelimitedRelease
-import Environment
+import Source.DelimitedRelease
+import Source.Environment
 
 -- Variables
 var :: HList env -> SNat (n :: Nat) -> Exp env (Lookup env n) '[] (n ': '[])

@@ -3,9 +3,9 @@
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE GADTs #-}
 
-module Environment where
+module Source.Environment where
 
-import DelimitedRelease
+import Source.DelimitedRelease
 
 -- se define en cada programa (A lo mejor se puede definir una type family para que lo defina, para que quede type Env = entorno xs, y xs es una lista de tuplas de enteros, con el nivel de seguridad )
 

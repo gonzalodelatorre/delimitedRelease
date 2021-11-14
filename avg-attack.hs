@@ -12,10 +12,10 @@
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
-import DelimitedRelease
-import Constructors
-import Environment
-import Interpreter
+import Source.DelimitedRelease
+import Source.Constructors
+import Source.Environment
+import Source.Interpreter
 
 import qualified Data.Map.Strict               as M
 
@@ -52,10 +52,10 @@ securityEnvironment = (zero, L) :-: (one, H) :-: (two, H) :-: (three, H) :-: (fo
 -- Memoria incial.
 memory = M.insert 0 2 (M.insert 1 3000 (M.insert 2 6000 (M.insert 3 3000 initMemory)))
 
-avg =  var securityEnvironment zero
-h1 =  var securityEnvironment one  
-h2 =  var securityEnvironment two 
-h3 =  var securityEnvironment three 
+avg = var securityEnvironment zero
+h1 = var securityEnvironment one  
+h2 = var securityEnvironment two 
+h3 = var securityEnvironment three 
 
 
 -- Habría que darle menos precedencia a =: que a los operadores aritméticos, para no
