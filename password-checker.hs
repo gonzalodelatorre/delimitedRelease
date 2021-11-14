@@ -12,10 +12,10 @@
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
-import DR
+import DelimitedRelease
 import Constructors
 import Environment
-import InterpreterTest
+import Interpreter
 
 import qualified Data.Map.Strict               as M
 
@@ -27,7 +27,7 @@ Password checker
 
 
 -- Security environment.
-securityEnvironment = (zero, H) :-: (one, L) :-: (two, H) :-: (three, H) :-: (four, H) :-: Nil -- TODO CAMBIE DOS A HIGH
+securityEnvironment = (zero, H) :-: (one, L) :-: (two, H) :-: (three, H) :-: (four, H) :-: Nil 
 
 -- Database 
 database = M.insert 0 23 (M.insert 1 45 (M.insert 2 2391 (M.insert 3 0 (M.insert 4 67 initMemory))))
@@ -74,7 +74,6 @@ tmpResult = three  =: buildHash
 -- fromList [(0,2),(1,2),(2,2)]
 
 
--- TODO RENAME THIS ASS PASSWORD CHECKER
 {-
 
 match checks if the password image, or hash, from the database is equal to the hash of 

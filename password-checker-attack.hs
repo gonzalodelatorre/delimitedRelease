@@ -12,10 +12,10 @@
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
-import DR
+import DelimitedRelease
 import Constructors
 import Environment
-import InterpreterTest
+import Interpreter
 
 import qualified Data.Map.Strict               as M
 
@@ -56,9 +56,10 @@ n = var failedSecurityEnvironment three
 temporalSignal = var failedSecurityEnvironment four
 
 
-{-
-Couldn't match type: '[ 'Succ 'Zero]
 
+-- Couldn't match type: '[ 'Succ 'Zero]
+
+{-
  
 passwordAttack = zero =: int 0 \.
        while (n >. int 0) 

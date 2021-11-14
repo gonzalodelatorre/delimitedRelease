@@ -8,7 +8,7 @@
 
 module Constructors where
 
-import DR
+import DelimitedRelease
 import Environment
 
 -- Variables

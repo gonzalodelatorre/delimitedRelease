@@ -19,10 +19,10 @@
 -- Γ : safe-while.hs
 --safeWhile = HCons (zero, H) (HCons (one, L) (HCons (two, L) (HCons (three, L) (HCons (four, L) HNil))))
 
-import DR
+import DelimitedRelease
 import Constructors
 import Environment
-import InterpreterTest
+import Interpreter
 
 import qualified Data.Map.Strict               as M
 
@@ -57,44 +57,41 @@ n := n − 1
 
 
 
-{-
+-- entorno de variables con tipos de seguridad
+securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: Nil
+
+memory = M.insert 0 2 (M.insert 1 23 (M.insert 2 3 ((M.insert 3 4 initMemory))))
+
+h = var securityEnvironment zero
+l = var securityEnvironment one
+k = var securityEnvironment two
+n = var securityEnvironment three
 
 
-l := 0; 
-while (n ≥ 0) do
-k := (2 exp n) − 1;
-if declassify(h >= k, low) then (h := h − k; l := l + k) else skip;
-n := n − 1
 
--}
-
-h = var zero
-l = var one
-k = var two
-n = var three
-
-{-
-code = (one =: (int 0)) \.
-       (while (gt n (int 0))  (    
-	   ( two =: minus (exponential (int 2) n) (int 1)   \.   
-	   
-	    (ifthenelse (declassify h L) skip skip) 
-	   
-	   ) \. 
-
-	   three =: minus n (int 1) ) )-}
-	   
-	   
-	   
---ode =  --(three =: (int 0)) \.
-  --     (while ( (int 0)) skip)  
-	   
-code = (while ( (int 0)) (two =: (int 3)))
-
-code2 = (while ( gt n (int 0)) (two =: (int 3)) \. skip )
-
-
--- No anda, preguntar	 - NO SABE QUE VARS TIENE, PREGUNTAR COMO SOLUCIONARLO  
--- code3 = (while ( (int 0)) skip)
---code3 = (while ( (int 0)) skip \. skip)
+code1 = (while ( (int 0)) skip)
+code2 = (while ( (int 0)) skip \. skip)
 code3 = skip \. skip
+
+
+
+
+
+safeWhile  = one =: int 0 \. 
+                            (while (n >. int 0)  
+							        (two =:  int 2 ^. n -. int 1 \. 
+									 
+									 three =:  n -. int 1 \. skip))
+
+									 
+--  evalStmWithEnviroment safeWhile memory									 
+
+
+
+
+
+
+
+
+
+

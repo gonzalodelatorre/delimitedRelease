@@ -12,10 +12,10 @@
 {-# LANGUAGE ImplicitParams #-}
 {-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
 
-import DR
+import DelimitedRelease
 import Constructors
 import Environment
-import InterpreterTest
+import Interpreter
 
 import qualified Data.Map.Strict               as M
 
@@ -56,10 +56,10 @@ n := n − 1
 securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: (four, L)  :-: Nil
 
 
-h = var securityEnvironment  zero
-l = var securityEnvironment  one
-k = var securityEnvironment  two
-n = var securityEnvironment  three
+h = var securityEnvironment zero
+l = var securityEnvironment one
+k = var securityEnvironment two
+n = var securityEnvironment three
 
 
 lEquals0 = one =: (int 0)
@@ -134,7 +134,7 @@ unsecureElectronicWallet  = one =: int 0 \.
                             (while (n >. int 0)  
 							        (two =:  int 2 ^. n -. int 1 \. 
 									 iff (declassify (h >=. k) L) 
-										    (zero =:  h -. k \. one =:  l +. k)						--seqAssigments 
+										    (zero =:  h -. k \. one =:  l +. k)						
 										    skip \. 
 									 three =:  n -. int 1 \. skip))
 
