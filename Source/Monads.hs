@@ -8,7 +8,6 @@ module Source.Monads where
 -- Clase para representar mónadas con estado de variables
 class Monad m => MonadState m where
     -- Busca el valor de una variable
-    -- TODO TAMBIEN CAMBIAR EL INTEGER
     lookfor :: Int -> m Int
     -- Cambia el valor de una variable
     update :: Int -> Int -> m ()
@@ -17,7 +16,3 @@ class Monad m => MonadState m where
 class Monad m => MonadError m where
     -- Lanza un error
    -- throw :: Error -> m a
-
--- Ejercicio 3.b: Dar una clase que provea las operaciones necesarias para
--- llevar el costo de las operaciones efectuadas. Llamela MonadCost.
--- COMPLETAR

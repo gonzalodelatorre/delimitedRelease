@@ -58,10 +58,6 @@ h2 = var securityEnvironment two
 h3 = var securityEnvironment three 
 
 
--- Habría que darle menos precedencia a =: que a los operadores aritméticos, para no
--- escribir tantos paréntesis, por ejemplo, que tipe ésto: four =: (h1 +. h2 +. h3) // (int 3) 
--- también se deberían poder sacar los paréntesis en int, teniendo éste la mayor precedencia 
-
 
 -- Este programa es correcto.
 -- La evaluacion es correcta.
@@ -75,13 +71,6 @@ averageSalaries = zero =: declassify ((h1 +. h2 +. h3) // int 3) L
 precedence = four =: (h1 +. h2 +. h3) // int 3 
 -- evalStmWithEnviroment precedence memory
 -- fromList [(0,2),(1,8),(2,22),(3,5),(4,11)]
-
-
--- a lo mejor hay una manera para poner avg en lugar de zero que se aproxima 
--- más a un lenguaje imperativo.
-
-
-
 
 
 -- Observacion, si pongo declassify average H NO Tipa

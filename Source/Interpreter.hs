@@ -32,7 +32,6 @@ import Control.Monad.Reader
 
 -- Entornos
 -- Asociación de nombres de variables y sus respectivos valores
--- TODO Borrar el primer Int, que hace referencia a las variables.
 type Enviroment = M.Map Int Int
 
 
@@ -78,7 +77,7 @@ evalExp (IntLit i)  = return i
 -- En principio usamos los enteros como booleanos, para no cambiar sistema de tipos
 evalExp (BoolLit i)  = return (boolToInt i)
 evalExp (Var x)    =  lookfor (toInt x)
-evalExp (Declassify e l)    = evalExp e -- TODO PROBRAR
+evalExp (Declassify e l)    = evalExp e 
 evalExp (Ope Plus e1 e2)  =  evalBIntegerOp e1 e2 (+)
 evalExp (Ope Minus e1 e2)  =  evalBIntegerOp e1 e2 (-)
 evalExp (Ope Mult e1 e2)  =  evalBIntegerOp e1 e2 (*)
@@ -143,13 +142,13 @@ eval (Ass x e) = do
   v <- evalExp e
   update (toInt x) v
 --  eval Skip
-eval (Seq c0  c1) =  (eval c0) >> (eval c1) -- TODO Revisar
+eval (Seq c0  c1) =  (eval c0) >> (eval c1) 
 eval (If b c0 c1) = do
   vb <- evalExp b
   if vb == 1 then eval c0 else eval c1 
 eval w@(While b c) = do
   vb <- evalExp b
-  if vb==1 then eval (Seq c w) else return () --eval Skip
+  if vb==1 then eval (Seq c w) else return () 
 
   
 
