@@ -2,8 +2,7 @@ module Source.Monads where
 
 
 
--- Clases de mónadas que proveen las operaciones necesarias
--- para implementar los evaluadores.
+
 
 -- Clase para representar mónadas con estado de variables
 class Monad m => MonadState m where

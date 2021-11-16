@@ -90,8 +90,6 @@ data SeType (s :: SType) where
 
 
 
-data Proxy (a :: k) = Proxy  
-
 {-
 
 Expressions

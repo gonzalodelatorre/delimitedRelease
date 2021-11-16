@@ -123,7 +123,7 @@ orOp x y = 1
 
 
 ---------------------------------------
--- SENTENCIAS
+-- Commands
 ---------------------------------------
 -- Evalua un programa en el estado nulo
 evalStm :: Stm a b c d -> Enviroment
