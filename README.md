@@ -1,4 +1,4 @@
-#A Haskell EDSL for Secure Programming With Delimited Release Property
+# A Haskell EDSL for Secure Programming With Delimited Release Property
 
 Graduate thesis to obtain the Master degree in Computer Science  
 
