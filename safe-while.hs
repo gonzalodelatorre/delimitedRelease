@@ -1,20 +1,3 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
-
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -24,11 +7,7 @@ import qualified Data.Map.Strict               as M
 
 {-
 
-Wallet Attack
-
-- h stores the (secret) amount of money in a customers electronic wallet
-- l stores the (public) amount of money spent during the current session  - LOW - 
-- k stores the cost of the item to be purchased - LOW -
+Safe while just tests the while loop in a safety manner.
 
 
 Γ :
@@ -38,9 +17,6 @@ k 2 -> Low
 n 3 -> Low
 
 
-Se rompe la integridad de la billetera.
-
-La variable k se está actualizando antes del declassiffy, por eso rompe.
 
 
 l := 0; 
@@ -53,7 +29,7 @@ n := n − 1
 
 
 
--- entorno de variables con tipos de seguridad
+-- Security environment for this example.
 securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: Nil
 
 memory = M.insert 0 2 (M.insert 1 23 (M.insert 2 3 ((M.insert 3 4 initMemory))))
@@ -79,8 +55,12 @@ safeWhile  = one =: int 0 \.
 									 
 									 three =:  n -. int 1 \. skip))
 
+
+-- Testing the program.
 									 
---  evalStmWithEnviroment safeWhile memory									 
+-- evalStmWithEnviroment safeWhile memory			
+-- fromList [(0,2),(1,0),(2,1),(3,0)]
+						 
 
 
 

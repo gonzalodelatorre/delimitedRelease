@@ -1,17 +1,3 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -22,6 +8,9 @@ import qualified Data.Map.Strict               as M
 {-
 
 Wallet Attack
+
+Writting the program in two different ways just for testing purposes.
+Below you will find a better way, less verbose way to write this program.
 
 - h stores the (secret) amount of money in a customers electronic wallet
 - l stores the (public) amount of money spent during the current session  - LOW - 
@@ -35,9 +24,8 @@ k 2 -> Low
 n 3 -> Low
 
 
-Se rompe la integridad de la billetera.
-
-La variable k se está actualizando antes del declassiffy, por eso rompe.
+The integrity of the wallet gets corrupted.
+Variable k is beign updated before getting declassified.
 
 
 l := 0; 
@@ -52,7 +40,7 @@ n := n − 1
 
 -- if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 
--- entorno de variables con tipos de seguridad
+-- Security environment for this example.
 securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: (three, L) :-: (four, L)  :-: Nil
 
 
@@ -110,8 +98,19 @@ dec_ = declassify hGtEk L
 ifStm = iff dec_ seqAssigments skip
 
 
+seq1 = nEqualsnMinus1 \. skip
+seq2 = ifStm \. seq1
+
+
+
+-- Rejected:
+-- unsecureElectronicWallet  = lEquals0 \. (while nGT0  (kEqualsExpOp \. seq2))
+
+
+
 {-
 
+This program is rejected.
 
 l := 0; 
 while (n ≥ 0) do
@@ -122,13 +121,6 @@ n := n − 1
 -}
 
 
-seq1 = nEqualsnMinus1 \. skip
-seq2 = ifStm \. seq1
-
-
--- Se rompe:
--- unsecureElectronicWallet  = lEquals0 \. (while nGT0  (kEqualsExpOp \. seq2))
-
 
 unsecureElectronicWallet  = one =: int 0 \. 
                             (while (n >. int 0)  
@@ -138,7 +130,10 @@ unsecureElectronicWallet  = one =: int 0 \.
 										    skip \. 
 									 three =:  n -. int 1 \. skip))
 
--- Andan ok. BORAR.
-pr1 = skip \. skip
-pr2 = iff (h >. k) skip skip
-pr3 = while (h >. k) skip 
+
+
+          
+
+      
+
+

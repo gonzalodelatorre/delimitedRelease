@@ -1,25 +1,28 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE TypeOperators #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
+{-# LANGUAGE DataKinds,
+		     TypeOperators,
+			 KindSignatures,
+			 GADTs #-}
 
 module Source.Environment where
 
 import Source.DelimitedRelease
 
--- se define en cada programa (A lo mejor se puede definir una type family para que lo defina, para que quede type Env = entorno xs, y xs es una lista de tuplas de enteros, con el nivel de seguridad )
 
--- Objetivo: quiero crear un tipo de la forma de Env, Env es una lista heterogéna de tipos
--- sus elementos pueden ser distintos tipos, sí tienen el mismo kind (Nat,SType) 
---
--- Necesitamos poder definir una lista a nivel de valores que tenga como tipo una lista heterogénea de tipos 
+{-
+
+
+HList is a data type defined to represent the environment as list of types. All of his elements have kind (Nat, SType).
+See below an example on how to use this data type.
+
+
+-}
 infixr 5 :-:
 
 data HList :: [(Nat , SType)] -> * where
     Nil :: HList '[] 
     (:-:) :: (SNat n , SeType s) -> HList xs -> HList ('(n , s) ': xs) 
 
--- Tipos de las variables
+-- Variable types
 
 type Zero = 'Zero
 
@@ -64,4 +67,27 @@ eight = SSucc seven
 
 nine :: SNat Nine
 nine = SSucc eight
+
+
+
+
+{-
+
+We can build our own environment using HList data type, using the numbers defined previously.
+This way we can build a value-level list, that contains a heterogeneous list of types as a type. 
+Below one can find one example.
+
+
+securityEnvironment = (zero, L) :-: (one, H) :-: (two, H) :-: (three, H) :-: (four, H) :-: Nil
+
+
+
+-}
+
+
+
+
+
+
+
 

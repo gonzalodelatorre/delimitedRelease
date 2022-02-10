@@ -1,18 +1,3 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -25,8 +10,9 @@ import qualified Data.Map.Strict               as M
 h1 := 1;
 avg := declassify(h2, low)
 
-Este programa anda correctamente porque la variable que se updatea antes de declassify, es distinta a la que aparece
-en la escape hatch.
+
+This program works because the variable getting updated before declassificattion occurs, it's different from the one on 
+the declassify operation.
 
 Γ :
 l 0 -> Low
@@ -37,7 +23,7 @@ h2 2 -> High
 
 -}
 
--- entorno de variables con tipos de seguridad
+-- Security environment for this example.
 securityEnvironment = (zero, L) :-: (one, H) :-: (two, H) :-: Nil
 
 memory = M.insert 0 2 (M.insert 1 2 (M.insert 2 3 initMemory))
@@ -54,8 +40,17 @@ code = one =: int 1 \.
 -- evalStmWithEnviroment code memory
 -- fromList [(0,3),(1,1),(2,3)]
 
+
+{-
+
+This program fails:
+
+Couldn't match type ‘'['Succ One]’ with ‘'[]’
+
+because the variable getting declassified gets updated before actually being declassified.
+          
+-}
 	
---  Couldn't match type ‘'['Succ One]’ with ‘'[]’
 --unsafeUpdate = (two =: (int 1)) \. 
 --               (zero =:  declassify h2 L)
 

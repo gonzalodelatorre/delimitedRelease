@@ -1,18 +1,3 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -23,13 +8,13 @@ import qualified Data.Map.Strict               as M
 {-
 
 
-Este programa  es seguro porque h no se actualiza antes de desclasificarse.
+This program is safe because h does not get updated before it gets declassified.
 
 
 if declassify(parity(h), low) then (l := 1; h := 1) else (l := 0; h := 0)
 
 
-Lo voy a cambiar por que no tengo la prosibilidad de escribir funciones (h se updatea en el if)
+I changed the program a little bit because the language itself does not provide a way to writte functions.
 
 
 if declassify( (if mod h 2 eq 0 then h:= 0 else h:= 1; Eq h 1) , low) then (l := 1; h := 1) else (l := 0; h := 0)
@@ -43,10 +28,10 @@ l 1 -> Low
 
 -}
 
--- Probamos con otro ambiente.
+-- Testing the program with different environment.
 memory = M.insert 0 0 (M.insert 1 32 (M.insert 2 222 (M.insert 3 53 initMemory)))
 
--- entorno de variables con tipos de seguridad
+-- Security environment for this example.
 securityEnvironment = (zero, H) :-: (one,L) :-: Nil
 
 h = var securityEnvironment zero
@@ -60,7 +45,12 @@ ifStm =   iff (declassify (h =. int 0) L)
 			      (one  =: int 88  \. zero  =: int 89)
 				  
 -- evalStmWithEnviroment ifStm memory
--- El resultado depende de la variable 0 que sereo en init enviroment 
+-- The result depends on the variable 0.
 
--- Programa no seguro
+-- Unsecure program
 -- unsafe =  (zero  =: (int 0)) \. ifStm
+
+
+
+
+

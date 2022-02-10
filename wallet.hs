@@ -1,17 +1,3 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -42,7 +28,7 @@ if  declassify(h >= k, low) then (h := h - k;l := l + k) else Skip
 -}
 
 
--- Entorno de seguridad.
+-- Security environment for this example.
 securityEnvironment = (zero, H) :-: (one, L) :-: (two, L) :-: Nil
 
 
@@ -54,7 +40,7 @@ l = var securityEnvironment one
 
 k = var securityEnvironment two
 
--- Probamos con otro ambiente.
+-- Testing with a different environment.
 memory =  M.insert 0 500 (M.insert 1 0 (M.insert 2 45 initMemory))
 
 secureElectronicWallet = iff (declassify (h  >. k) L)
@@ -68,4 +54,4 @@ secureElectronicWallet = iff (declassify (h  >. k) L)
 
 
 -- Another example. 
-ifStm2 = iff (declassify (h >. k) L) skip skip
+ifStm = iff (declassify (h >. k) L) skip skip

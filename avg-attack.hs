@@ -1,17 +1,3 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -45,12 +31,12 @@ h3 3 -> High
 
 -}
 
--- Entorno de seguridad.
+-- Security environment for this example.
 securityEnvironment = (zero, L) :-: (one, H) :-: (two, H) :-: (three, H) :-: (four, H) :-: Nil
 
 
--- Memoria incial.
-memory = M.insert 0 2 (M.insert 1 3000 (M.insert 2 6000 (M.insert 3 3000 initMemory)))
+-- Initial Memory.
+memory = M.insert 0 2 (M.insert 1 10 (M.insert 2 3 (M.insert 3 2 initMemory)))
 
 avg = var securityEnvironment zero
 h1 = var securityEnvironment one  
@@ -58,26 +44,24 @@ h2 = var securityEnvironment two
 h3 = var securityEnvironment three 
 
 
-
--- Este programa es correcto.
--- La evaluacion es correcta.
-averageSalaries = zero =: declassify ((h1 +. h2 +. h3) // int 3) L
+-- Correct evaluation.
+averageSalaries = zero =: declassify ((h1 +. h2 +. h3) //. int 3) L
 -- evalStmWithEnviroment averageSalaries memory
--- fromList [(0,11),(1,8),(2,22),(3,5)]
--- La variable 0 va cambiando, si cambio los valores del ambiente
+-- fromList [(0,5),(1,10),(2,3),(3,2)]
+-- Variables 0 changes as the values on the environment changes.
 
 
 -- Works
-precedence = four =: (h1 +. h2 +. h3) // int 3 
+precedence = four =: (h1 +. h2 +. h3) //. int 3 
 -- evalStmWithEnviroment precedence memory
--- fromList [(0,2),(1,8),(2,22),(3,5),(4,11)]
+-- fromList [(0,2),(1,10),(2,3),(3,2),(4,5)]
 
 
--- Observacion, si pongo declassify average H NO Tipa
+-- If i put declassify averege H, i won't compile.
 
 
 
--- No tipa, este es el ejemplo que pongo en la tesis.
+-- Won´t work. Example given in the thesis.
 {-
 unsecureProgram = one =: int 100 \.   -- Swapping the values h1, h2.
                   two =: h1 \.
@@ -85,7 +69,12 @@ unsecureProgram = one =: int 100 \.   -- Swapping the values h1, h2.
                   averageSalaries 
 -}
 
--- Ejemplo de asignación.
+-- Assigment example.
 assigmentExample = one =: int 100
 -- *Main> evalStmWithEnviroment assigmentExample memory
--- fromList [(0,2),(1,100),(2,22),(3,5)]
+-- fromList [(0,2),(1,100),(2,3),(3,2)]
+
+
+-- Calling evalStmWithEnviroment precedence initMemory will return
+-- fromList *** Exception: Maybe.fromJust: Nothing
+

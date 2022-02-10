@@ -1,18 +1,3 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-} 
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -32,7 +17,7 @@ vh 1 -> High
 
 -}
 
--- entorno de variables con tipos de seguridad
+-- Security environment for this example.
 securityEnvironment = (zero, L) :-: (one, H) :-: Nil
 
 
@@ -40,5 +25,14 @@ vl = var securityEnvironment zero
 vh = var securityEnvironment one
 
 
+
+{-
+If i uncomment this line, the program will get an error:
+
+No instance for (LEq 'High 'Low) arising from a use of ‘=:’
+
+This is correct because it prevents a direct assigment from lower variables 
+to higher variables.
+-}
 -- vl := vh 
-code = zero =: vh
+-- code = zero =: vh

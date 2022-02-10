@@ -1,23 +1,11 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
 {-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-} 
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
+
 
 
 module Source.Interpreter where
 
 
 import           Source.DelimitedRelease
-import           Source.Monads
 import qualified Data.Map.Strict               as M
 import           Data.Maybe
 import           Prelude                 hiding ( fst
@@ -29,39 +17,19 @@ import           Control.Monad                  ( liftM
                                                 )
 												
 import Control.Monad.Reader
+import Control.Monad.State 
 
--- Entornos
--- Asociación de nombres de variables y sus respectivos valores
+-- Environment
+-- Map between variables and assigned values
 type Enviroment = M.Map Int Int
 
 
--- Entorno nulo
+-- Empty environment
 initMemory :: Enviroment
 initMemory = M.empty
 
 
--- Mónada estado
-newtype State a = State { runState :: Enviroment -> P.Pair a Enviroment }
-
-
-instance Monad State where
-  return x = State (\s -> (x :!: s))
-  m >>= f = State (\s -> let (v :!: s') = runState m s in runState (f v) s')
-  
-  
--- Para calmar al GHC
-instance Functor State where
-  fmap = liftM
-
-instance Applicative State where
-  pure  = return
-  (<*>) = ap
-  
-  
-instance MonadState State where
-  lookfor v = State (\s -> (lookfor' v s :!: s))
-    where lookfor' v s = fromJust $ M.lookup v s
-  update v i = State (\s -> (() :!: update' v i s)) where update' = M.insert
+type Result a = StateT Enviroment Maybe a
   
   
   
@@ -69,14 +37,19 @@ toInt :: SNat n -> Int
 toInt SZero = 0
 toInt (SSucc x) = 1 + (toInt x)
 
+
+update v i = StateT (\s -> Just ((), update' v i s)) where update' = M.insert
+lookfor x = StateT (\s -> Just (lookfor' x s, s))
+								where lookfor' v s = fromJust $ M.lookup v s
+
+
 --------------------------------------- 
 -- Expresiones
 ---------------------------------------
-evalExp ::  Exp a b c d -> State Int
+evalExp ::  Exp a b c d -> Result Int
 evalExp (IntLit i)  = return i
--- En principio usamos los enteros como booleanos, para no cambiar sistema de tipos
 evalExp (BoolLit i)  = return (boolToInt i)
-evalExp (Var x)    =  lookfor (toInt x)
+evalExp (Var x)    =   lookfor (toInt x)
 evalExp (Declassify e l)    = evalExp e 
 evalExp (Ope Plus e1 e2)  =  evalBIntegerOp e1 e2 (+)
 evalExp (Ope Minus e1 e2)  =  evalBIntegerOp e1 e2 (-)
@@ -111,37 +84,36 @@ evalBIntegerOp e1 e2 f = do
 boolToInt False = 0
 boolToInt True = 1
 
--- 0 false y distinto de 0 True
 andOp 0 x = 0
 andOp x 0 = 0
 andOp x y = 1
-
 
 orOp 0 0 = 0
 orOp x y = 1
 
 
-
 ---------------------------------------
 -- Commands
 ---------------------------------------
--- Evalua un programa en el estado nulo
+
+-- Evaluates a program given an empty state.
 evalStm :: Stm a b c d -> Enviroment
-evalStm p = snd (runState (eval p) initMemory)
+evalStm p =  let (x, y) = fromJust $ (runStateT (eval p) initMemory) 
+             in y
 
 
--- Evalua un programa en un estado dado.
+-- Evaluates a program given a state.
 evalStmWithEnviroment :: Stm a b c d -> Enviroment -> Enviroment
-evalStmWithEnviroment p env = snd (runState (eval p) env)
+evalStmWithEnviroment p env = let (x, y) = fromJust $ (runStateT (eval p) env)
+							  in y
 
--- Evalua multiples pasos de un comando, hasta alcanzar un Skip
-
-eval :: Stm a b c d -> State ()
+-- Evaluates multiple steps of a command, ultil it reaches Skip
+eval :: Stm a b c d -> Result ()
 eval Skip = return ()
 eval (Ass x e) = do
   v <- evalExp e
   update (toInt x) v
---  eval Skip
+  eval Skip
 eval (Seq c0  c1) =  (eval c0) >> (eval c1) 
 eval (If b c0 c1) = do
   vb <- evalExp b
@@ -150,7 +122,6 @@ eval w@(While b c) = do
   vb <- evalExp b
   if vb==1 then eval (Seq c w) else return () 
 
-  
 
 
 

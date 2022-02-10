@@ -1,21 +1,17 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
+{-# LANGUAGE DataKinds,
+			 GADTs, 
+			 TypeFamilies,
+		     PolyKinds, 
+		     TypeOperators,
+			 MultiParamTypeClasses, 
+             FlexibleInstances,
+             FlexibleContexts,
+             UndecidableInstances #-}
+
 
 
 module Source.DelimitedRelease where
 
-import Control.Monad.Reader
 
 
 data Nat = Zero | Succ Nat
@@ -32,7 +28,7 @@ type family IfThenElse (b :: Bool) (t :: a) (u :: a) :: a where
    IfThenElse 'True  t u = t
    IfThenElse 'False t u = u 
 
--- append
+-- Append
 type family Union (xs :: [a]) (ys :: [a]):: [a] where 
     Union '[]       ys = ys
     Union (x ': xs) ys = x ': (Union xs ys) 

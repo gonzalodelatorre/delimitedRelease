@@ -1,17 +1,3 @@
-{-# LANGUAGE DataKinds #-} 
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeOperators #-}  
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ImplicitParams #-}
-{-# LANGUAGE TypeApplications, ScopedTypeVariables #-}
-
 import Source.DelimitedRelease
 import Source.Constructors
 import Source.Environment
@@ -34,7 +20,7 @@ if hash(sign(h - k + 1), 0) = hash(1, 0)
 then (h := h - k; l := l + k) else skip;
 n := n - 1
 
-Eventualmente voy a descasificar h, y la voy a asignar a una variable low.
+Eventually h will get declassified and later assigned to a low variable.
 
           
 -}
@@ -83,8 +69,8 @@ sign = iff ((declassify h L) -. k +. int 1 >. int 0)
 			(four =: int 0)
 			)
 
-hashSignal = ((temporalSignal +. int 0)  *. (temporalSignal +. int 0 +. int 1)) // int 2  +. int 1
-hash10 =   ((int 1 +. int 0)  *. (int 1 +. int 0 +. int 1)) // int 2  +. int 1
+hashSignal = ((temporalSignal +. int 0)  *. (temporalSignal +. int 0 +. int 1)) //. int 2  +. int 1
+hash10 =   ((int 1 +. int 0)  *. (int 1 +. int 0 +. int 1)) //. int 2  +. int 1
 
 
 
