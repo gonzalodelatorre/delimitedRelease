@@ -39,8 +39,13 @@ toInt (SSucc x) = 1 + (toInt x)
 
 
 update v i = StateT (\s -> Just ((), update' v i s)) where update' = M.insert
-lookfor x = StateT (\s -> Just (lookfor' x s, s))
-								where lookfor' v s = fromJust $ M.lookup v s
+lookfor x = do env <- get
+               case  M.lookup x env of
+				     Nothing -> throw
+				     Just y -> return y
+				
+throw = StateT (\s -> Nothing)
+			   
 
 
 --------------------------------------- 
@@ -49,6 +54,7 @@ lookfor x = StateT (\s -> Just (lookfor' x s, s))
 evalExp ::  Exp a b c d -> Result Int
 evalExp (IntLit i)  = return i
 evalExp (BoolLit i)  = return (boolToInt i)
+
 evalExp (Var x)    =   lookfor (toInt x)
 evalExp (Declassify e l)    = evalExp e 
 evalExp (Ope Plus e1 e2)  =  evalBIntegerOp e1 e2 (+)
@@ -84,9 +90,11 @@ evalBIntegerOp e1 e2 f = do
 boolToInt False = 0
 boolToInt True = 1
 
+-- 0 false y distinto de 0 True
 andOp 0 x = 0
 andOp x 0 = 0
 andOp x y = 1
+
 
 orOp 0 0 = 0
 orOp x y = 1

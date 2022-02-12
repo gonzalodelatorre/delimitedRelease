@@ -29,10 +29,10 @@ vh = var securityEnvironment one
 {-
 If i uncomment this line, the program will get an error:
 
-No instance for (LEq 'High 'Low) arising from a use of ‘=:’
+No instance for (Source.DelimitedRelease.LEq 'High 'Low) arising from a use of ‘=:’
 
 This is correct because it prevents a direct assigment from lower variables 
 to higher variables.
 -}
 -- vl := vh 
--- code = zero =: vh
+--code = zero =: vh

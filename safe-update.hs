@@ -36,7 +36,7 @@ h2 = var securityEnvironment two
 
 code = one =: int 1 \.
        zero =:  declassify h2 L
-	   
+
 -- evalStmWithEnviroment code memory
 -- fromList [(0,3),(1,1),(2,3)]
 
@@ -50,7 +50,7 @@ Couldn't match type ‘'['Succ One]’ with ‘'[]’
 because the variable getting declassified gets updated before actually being declassified.
           
 -}
-	
+
 --unsafeUpdate = (two =: (int 1)) \. 
 --               (zero =:  declassify h2 L)
 

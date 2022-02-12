@@ -42,6 +42,7 @@ zLPlusOne = two  =: zL  +. int 1
 -- Correct If
 -- if yL + 2 then zL := zL + 1 else xH := xH − 1
 -- ifStm = iff (yL +. (int 2)) zLPlusOne xHMinusOne
+-- evalStm ifStm
 -- Error thrown because variables got no values stored.
 -- *** Exception: Maybe.fromJust: Nothing
 
@@ -61,6 +62,6 @@ program  =   zero =: int 0  \.
 
 -- evalStm ifStm
 -- evalStm ifStm : fromList [(0,9),(1,1),(2,1)]
--- Variables get updated
+-- Variables got updated
 
  

@@ -42,12 +42,19 @@ l = var securityEnvironment one
 -- if declassify(h = 1, low) then (l := 1; h := 1) else (l := 0; h := 0)
 ifStm =   iff (declassify (h =. int 0) L) 
                   (one  =: int 1  \. zero  =: int 33) 
-			      (one  =: int 88  \. zero  =: int 89)
-				  
+                  (one  =: int 88  \. zero  =: int 89)
+
 -- evalStmWithEnviroment ifStm memory
 -- The result depends on the variable 0.
 
--- Unsecure program
+{-
+Unsecure program
+
+Couldn't match type: '[ 'Zero]
+                     with: '[]
+
+
+-}
 -- unsafe =  (zero  =: (int 0)) \. ifStm
 
 
