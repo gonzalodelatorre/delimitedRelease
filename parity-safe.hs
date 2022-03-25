@@ -58,6 +58,20 @@ Couldn't match type: '[ 'Zero]
 -- unsafe =  (zero  =: (int 0)) \. ifStm
 
 
+{-
+Unsecure program
+
+
+This is the final example of section 4 (Sabenfeld and Myers).
+Which shows that even if this program is secure (because it only leaks the parity of h
+and not the whole value of h)it doesn´t pass the type checker.
+ 
+
+-}
+--unsafe2 = (zero  =: h %. (int 2) =. int 0 ) \.
+--          (one  =: (declassify h L))
+
+
 
 
 
